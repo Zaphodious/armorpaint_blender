@@ -19,9 +19,9 @@
 
 bl_info = {
     "name": "ArmorPaint Live-Link",
-    "author": "PiloeGAO (Leo DEPOIX), Spirou4D, luboslenco",
-    "version": (0, 9, 0),
-    "blender": (3, 6, 0),
+    "author": "PiloeGAO (Leo DEPOIX), Spirou4D, luboslenco, Zaphodious",
+    "version": (0, 9, 10),
+    "blender": (4, 2, 0),
     "location": "3D View > Side Bar",
     "description": "Integration of ArmorPaint into Blender",
     "warning": "Development",
@@ -313,29 +313,30 @@ class ArmorPaintLivelinkOperator(Operator):
         
             # Export current object as obj and open it in armorpaint
             # Export the object as Obj and save it in the correct directory
-            bpy.ops.export_scene.obj(filepath=path_tmp,
+            bpy.ops.wm.obj_export(filepath=path_tmp,
                                     check_existing=True,
-                                    axis_forward='-Z',
-                                    axis_up='Y',
+                                    forward_axis='NEGATIVE_Z',
+                                    up_axis='Y',
                                     filter_glob="*.obj;*.mtl",
-                                    use_selection=True,
-                                    use_animation=False,
-                                    use_mesh_modifiers=True,
-                                    use_edges=True,
-                                    use_smooth_groups=True,
-                                    use_smooth_groups_bitflags=False,
-                                    use_normals=True,
-                                    use_uvs=True,
-                                    use_materials=True,
-                                    use_triangles=False,
-                                    use_nurbs=False,
-                                    use_vertex_groups=False,
-                                    use_blen_objects=True,
-                                    group_by_object=False,
-                                    group_by_material=False,
-                                    keep_vertex_order=False,
+                                    export_selected_objects=True,
+                                    apply_modifiers=True,
+                                    #use_edges=True,
+                                    smooth_group_bitflags=False,
                                     global_scale=1,
-                                    path_mode='AUTO')
+                                    path_mode='AUTO',
+                                    export_animation=False,
+                                    export_normals=True,
+                                    export_uv=True,
+                                    export_materials=True,
+                                    export_triangulated_mesh=False,
+                                    export_curves_as_nurbs=False,
+                                    export_vertex_groups=False,
+                                    #export_blen_objects=True,
+                                    export_object_groups=False,
+                                    export_material_groups=False,
+                                    export_smooth_groups=True,
+                                    #keep_vertex_order=False,
+                                    )
 
             #Launch ArmorPaint
             subprocess.Popen([path_exe,path_tmp])
